@@ -46,6 +46,7 @@ class Country(Base):
     region = relationship("Region", back_populates="countries")
     preambles = relationship("Preamble", back_populates="country")
     chapter = relationship("Chapter", back_populates="country")
+    articles = relationship("Article", back_populates="country")
 
 
 class Preamble(Base):
@@ -67,3 +68,18 @@ class Chapter(Base):
     country_id = Column(Integer, ForeignKey("countries.id"))
 
     country = relationship("Country", back_populates="chapter")
+    articles = relationship("Article", back_populates="chapter")
+
+
+class Article(Base):
+    __tablename__ = "articles"
+
+    id = Column(Integer, primary_key=True, index=True)
+    country_id = Column(Integer, ForeignKey("countries.id"))
+    chapter_id = Column(Integer, ForeignKey("chapters.id"))
+    number = Column(Integer)
+    title = Column(String, index=True)
+    text = Column(String)
+
+    country = relationship("Country", back_populates="articles")
+    chapter = relationship("Chapter", back_populates="articles")

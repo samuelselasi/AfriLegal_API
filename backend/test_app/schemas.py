@@ -95,3 +95,22 @@ class Chapter(ChapterBase):
 
     class Config:
         orm_mode = True
+
+
+class ArticleBase(BaseModel):
+    number: int
+    title: str
+    text: str
+
+
+class ArticleCreate(ArticleBase):
+    pass
+
+
+class Article(ArticleBase):
+    id: int
+    country: Country
+    chapter: Chapter
+
+    class Config:
+        orm_mode = True
