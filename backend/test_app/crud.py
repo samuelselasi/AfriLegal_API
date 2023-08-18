@@ -78,3 +78,17 @@ def create_preamble(db: Session, preamble: schemas.PreambleCreate, country_id: i
     db.commit()
     db.refresh(db_preamble)
     return db_preamble
+
+
+def get_chapter(db: Session, chapter_id: int):
+    return db.query(models.Chapter).filter(models.Chapter.id == chapter_id).first()
+
+def get_chapters_by_country(db: Session, country_id: int, skip: int = 0, limit: int = 100):
+    return db.query(models.Chapter).filter(models.Chapter.country_id == country_id).offset(skip).limit(limit).all()
+
+def create_chapter(db: Session, chapter: schemas.ChapterCreate, country_id: int):
+    db_chapter = models.Chapter(**chapter.dict(), country_id=country_id)
+    db.add(db_chapter)
+    db.commit()
+    db.refresh(db_chapter)
+    return db_chapter

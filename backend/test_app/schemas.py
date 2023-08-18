@@ -70,12 +70,26 @@ class Region(RegionBase):
 
 class PreambleBase(BaseModel):
     text: str
-    # country_id: int
 
 class PreambleCreate(PreambleBase):
     pass
 
 class Preamble(PreambleBase):
+    id: int
+    country: Country
+
+    class Config:
+        orm_mode = True
+
+
+class ChapterBase(BaseModel):
+    number: int
+    text: str
+
+class ChapterCreate(ChapterBase):
+    pass
+
+class Chapter(ChapterBase):
     id: int
     country: Country
 
