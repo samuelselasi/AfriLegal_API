@@ -114,3 +114,20 @@ class Article(ArticleBase):
 
     class Config:
         orm_mode = True
+
+
+class SectionBase(BaseModel):
+    number: int
+    text: str
+
+class SectionCreate(SectionBase):
+    pass
+
+class Section(SectionBase):
+    id: int
+    country: Country
+    chapter: Chapter
+    article: Article
+
+    class Config:
+        orm_mode = True
