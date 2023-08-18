@@ -131,3 +131,21 @@ class Section(SectionBase):
 
     class Config:
         orm_mode = True
+
+
+class SubsectionBase(BaseModel):
+    sub: str
+    text: str
+
+class SubsectionCreate(SubsectionBase):
+    pass
+
+class Subsection(SubsectionBase):
+    id: int
+    country: Country
+    chapter: Chapter
+    article: Article
+    section: Section
+
+    class Config:
+        orm_mode = True
