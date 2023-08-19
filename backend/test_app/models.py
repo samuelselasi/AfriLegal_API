@@ -1,10 +1,12 @@
+"""Module that defines tables"""
 from sqlalchemy import Boolean, Column, ForeignKey, Integer, String
 from sqlalchemy.orm import relationship
-
 from .database import Base
 
 
 class User(Base):
+    """Class that defines users attributes"""
+
     __tablename__ = "users"
 
     id = Column(Integer, primary_key=True, index=True)
@@ -16,6 +18,8 @@ class User(Base):
 
 
 class Item(Base):
+    """Class that defines items attributes"""
+
     __tablename__ = "items"
 
     id = Column(Integer, primary_key=True, index=True)
@@ -27,6 +31,8 @@ class Item(Base):
 
 
 class Region(Base):
+    """Class that defines regions attributes"""
+
     __tablename__ = "regions"
 
     id = Column(Integer, primary_key=True, index=True)
@@ -37,6 +43,8 @@ class Region(Base):
 
 
 class Country(Base):
+    """Class that defines countries attributes"""
+
     __tablename__ = "countries"
 
     id = Column(Integer, primary_key=True, index=True)
@@ -52,6 +60,8 @@ class Country(Base):
 
 
 class Preamble(Base):
+    """Class that defines preambles attributes"""
+
     __tablename__ = "preamble"
 
     id = Column(Integer, primary_key=True, index=True)
@@ -62,6 +72,8 @@ class Preamble(Base):
 
 
 class Chapter(Base):
+    """Class that defines chapters attributes"""
+
     __tablename__ = "chapters"
 
     id = Column(Integer, primary_key=True, index=True)
@@ -76,6 +88,8 @@ class Chapter(Base):
 
 
 class Article(Base):
+    """Class that defines articles attributes"""
+
     __tablename__ = "articles"
 
     id = Column(Integer, primary_key=True, index=True)
@@ -92,6 +106,8 @@ class Article(Base):
 
 
 class Section(Base):
+    """Class that defines sections attributes"""
+
     __tablename__ = "sections"
 
     id = Column(Integer, primary_key=True, index=True)
@@ -108,6 +124,8 @@ class Section(Base):
 
 
 class Subsection(Base):
+    """Class that defines subsections attributes"""
+
     __tablename__ = "subsections"
 
     id = Column(Integer, primary_key=True, index=True)

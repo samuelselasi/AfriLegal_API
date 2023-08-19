@@ -187,3 +187,45 @@ def read_subsection(subsection_id: int, db: Session = Depends(get_db)):
     if db_subsection is None:
         raise HTTPException(status_code=404, detail="Subsection not found")
     return db_subsection
+
+
+# Search sections by keyword
+@app.get("/search/sections/", response_model=List[schemas.Section])
+def search_sections_by_keyword(
+    country_id: int, keyword: str, skip: int = 0, limit: int = 100, db: Session = Depends(get_db)
+):
+    sections = crud.search_sections_by_keyword(
+        db, country_id=country_id, keyword=keyword, skip=skip, limit=limit
+    )
+    return sections
+
+# Search subsections by keyword
+@app.get("/search/subsections/", response_model=List[schemas.Subsection])
+def search_subsections_by_keyword(
+    country_id: int, keyword: str, skip: int = 0, limit: int = 100, db: Session = Depends(get_db)
+):
+    subsections = crud.search_subsections_by_keyword(
+        db, country_id=country_id, keyword=keyword, skip=skip, limit=limit
+    )
+    return subsections
+
+# Search chapters by keyword
+@app.get("/search/chapters/", response_model=List[schemas.Chapter])
+def search_chapters_by_keyword(
+    country_id: int, keyword: str, skip: int = 0, limit: int = 100, db: Session = Depends(get_db)
+):
+    chapters = crud.search_chapters_by_keyword(
+        db, country_id=country_id, keyword=keyword, skip=skip, limit=limit
+    )
+    return chapters
+
+
+# Search articles by keyword
+@app.get("/search/articles/", response_model=List[schemas.Article])
+def search_articles_by_keyword(
+    country_id: int, keyword: str, skip: int = 0, limit: int = 100, db: Session = Depends(get_db)
+):
+    articles = crud.search_articles_by_keyword(
+        db, country_id=country_id, keyword=keyword, skip=skip, limit=limit
+    )
+    return articles

@@ -1,3 +1,4 @@
+"""Module that defines orm schemas for tables"""
 from typing import List, Union
 from pydantic import BaseModel
 
@@ -39,6 +40,7 @@ class User(UserBase):
 class CountryBase(BaseModel):
     name: str
 
+
 class CountryCreate(CountryBase):
     pass
 
@@ -71,8 +73,10 @@ class Region(RegionBase):
 class PreambleBase(BaseModel):
     text: str
 
+
 class PreambleCreate(PreambleBase):
     pass
+
 
 class Preamble(PreambleBase):
     id: int
@@ -86,8 +90,10 @@ class ChapterBase(BaseModel):
     number: int
     text: str
 
+
 class ChapterCreate(ChapterBase):
     pass
+
 
 class Chapter(ChapterBase):
     id: int
@@ -120,8 +126,10 @@ class SectionBase(BaseModel):
     number: int
     text: str
 
+
 class SectionCreate(SectionBase):
     pass
+
 
 class Section(SectionBase):
     id: int
@@ -137,8 +145,10 @@ class SubsectionBase(BaseModel):
     sub: str
     text: str
 
+
 class SubsectionCreate(SubsectionBase):
     pass
+
 
 class Subsection(SubsectionBase):
     id: int
