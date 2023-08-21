@@ -131,6 +131,19 @@ def read_preamble(preamble_id: int, db: Session = Depends(get_db)):
     return db_preamble
 
 
+@app.put("/preambles/{preamble_id}", response_model=schemas.Preamble)
+def update_preamble(
+    preamble_id: int, preamble_update: schemas.PreambleBase, db: Session = Depends(get_db)
+):
+    return crud.update_preamble(db, preamble_id, preamble_update)
+
+
+@app.delete("/preambles/{preamble_id}", response_model=None)
+def delete_preamble(preamble_id: int, db: Session = Depends(get_db)):
+    crud.delete_preamble(db, preamble_id)
+    return {"message": "Preamble deleted successfully"}
+
+
 @app.post("/chapters/", response_model=schemas.Chapter)
 def create_chapter_for_country(
     country_id: int, chapter: schemas.ChapterCreate, db: Session = Depends(get_db)):
