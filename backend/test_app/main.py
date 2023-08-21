@@ -149,11 +149,13 @@ def create_chapter_for_country(
     country_id: int, chapter: schemas.ChapterCreate, db: Session = Depends(get_db)):
     return crud.create_chapter(db=db, chapter=chapter, country_id=country_id)
 
+
 @app.get("/chapters/", response_model=List[schemas.Chapter])
 def read_chapters_by_country(
     country_id: int, skip: int = 0, limit: int = 100, db: Session = Depends(get_db)):
     chapters = crud.get_chapters_by_country(db, country_id=country_id, skip=skip, limit=limit)
     return chapters
+
 
 @app.get("/chapters/{chapter_id}", response_model=schemas.Chapter)
 def read_chapter(chapter_id: int, db: Session = Depends(get_db)):
@@ -161,6 +163,19 @@ def read_chapter(chapter_id: int, db: Session = Depends(get_db)):
     if db_chapter is None:
         raise HTTPException(status_code=404, detail="Chapter not found")
     return db_chapter
+
+
+@app.put("/chapters/{chapter_id}", response_model=schemas.Chapter)
+def update_chapter(
+    chapter_id: int, chapter_update: schemas.ChapterBase, db: Session = Depends(get_db)
+):
+    return crud.update_chapter(db, chapter_id, chapter_update)
+
+
+@app.delete("/chapters/{chapter_id}", response_model=None)
+def delete_chapter(chapter_id: int, db: Session = Depends(get_db)):
+    crud.delete_chapter(db, chapter_id)
+    return {"message": "Chapter deleted successfully"}
 
 
 @app.post("/articles/", response_model=schemas.Article)

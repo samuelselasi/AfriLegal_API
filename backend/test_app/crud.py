@@ -162,6 +162,27 @@ def create_chapter(db: Session, chapter: schemas.ChapterCreate, country_id: int)
     return db_chapter
 
 
+def update_chapter(db: Session, chapter_id: int, chapter_update: schemas.ChapterBase):
+    db_chapter = get_chapter(db, chapter_id=chapter_id)
+    if db_chapter:
+        for key, value in chapter_update.dict().items():
+            setattr(db_chapter, key, value)
+        db.commit()
+        db.refresh(db_chapter)
+        return db_chapter
+    else:
+        raise HTTPException(status_code=404, detail="Chapter not found")
+
+
+def delete_chapter(db: Session, chapter_id: int):
+    db_chapter = get_chapter(db, chapter_id=chapter_id)
+    if db_chapter:
+        db.delete(db_chapter)
+        db.commit()
+    else:
+        raise HTTPException(status_code=404, detail="Chapter not found")
+
+
 def get_article(db: Session, article_id: int):
     return db.query(models.Article).filter(models.Article.id == article_id).first()
 
