@@ -78,6 +78,17 @@ def read_region(region_id: int, db: Session = Depends(get_db)):
     return db_region
 
 
+@app.put("/regions/{region_id}", response_model=schemas.Region)
+def update_region(region_id: int, region_update: schemas.RegionBase, db: Session = Depends(get_db)):
+    return crud.update_region(db, region_id, region_update)
+
+
+@app.delete("/regions/{region_id}", response_model=None)
+def delete_region(region_id: int, db: Session = Depends(get_db)):
+    crud.delete_region(db, region_id)
+    return {"message": "Region deleted successfully"}
+
+
 @app.post("/regions/{region_id}/country/", response_model=schemas.Country)
 def create_country_for_region(
     region_id: int, country: schemas.CountryCreate, db: Session = Depends(get_db)):
@@ -88,6 +99,17 @@ def create_country_for_region(
 def read_countries(skip: int = 0, limit: int = 100, db: Session = Depends(get_db)):
     countries = crud.get_countries(db, skip=skip, limit=limit)
     return countries
+
+
+@app.put("/countries/{country_id}", response_model=schemas.Country)
+def update_country(country_id: int, country_update: schemas.CountryBase, db: Session = Depends(get_db)):
+    return crud.update_country(db, country_id, country_update)
+
+
+@app.delete("/countries/{country_id}", response_model=None)
+def delete_country(country_id: int, db: Session = Depends(get_db)):
+    crud.delete_country(db, country_id)
+    return {"message": "Country deleted successfully"}
 
 
 @app.post("/preambles/", response_model=schemas.Preamble)
