@@ -197,6 +197,18 @@ def read_article(article_id: int, db: Session = Depends(get_db)):
     return db_article
 
 
+@app.put("/articles/{article_id}", response_model=schemas.Article)
+def update_article(
+    article_id: int, article_update: schemas.ArticleBase, db: Session = Depends(get_db)
+):
+    return crud.update_article(db, article_id, article_update)
+
+@app.delete("/articles/{article_id}", response_model=None)
+def delete_article(article_id: int, db: Session = Depends(get_db)):
+    crud.delete_article(db, article_id)
+    return {"message": "Article deleted successfully"}
+
+
 @app.post("/sections/", response_model=schemas.Section)
 def create_section_for_country_chapter_article(
     country_id: int, chapter_id: int, article_id: int, section: schemas.SectionCreate, db: Session = Depends(get_db)):
@@ -214,6 +226,18 @@ def read_section(section_id: int, db: Session = Depends(get_db)):
     if db_section is None:
         raise HTTPException(status_code=404, detail="Section not found")
     return db_section
+
+
+@app.put("/sections/{section_id}", response_model=schemas.Section)
+def update_section(
+    section_id: int, section_update: schemas.SectionBase, db: Session = Depends(get_db)
+):
+    return crud.update_section(db, section_id, section_update)
+
+@app.delete("/sections/{section_id}", response_model=None)
+def delete_section(section_id: int, db: Session = Depends(get_db)):
+    crud.delete_section(db, section_id)
+    return {"message": "Section deleted successfully"}
 
 
 @app.post("/subsections/", response_model=schemas.Subsection)
@@ -237,6 +261,18 @@ def read_subsection(subsection_id: int, db: Session = Depends(get_db)):
     if db_subsection is None:
         raise HTTPException(status_code=404, detail="Subsection not found")
     return db_subsection
+
+
+@app.put("/subsections/{subsection_id}", response_model=schemas.Subsection)
+def update_subsection(
+    subsection_id: int, subsection_update: schemas.SubsectionBase, db: Session = Depends(get_db)
+):
+    return crud.update_subsection(db, subsection_id, subsection_update)
+
+@app.delete("/subsections/{subsection_id}", response_model=None)
+def delete_subsection(subsection_id: int, db: Session = Depends(get_db)):
+    crud.delete_subsection(db, subsection_id)
+    return {"message": "Subsection deleted successfully"}
 
 
 # Search sections by keyword

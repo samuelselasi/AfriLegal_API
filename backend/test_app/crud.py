@@ -197,6 +197,26 @@ def create_article(db: Session, article: schemas.ArticleCreate, country_id: int,
     return db_article
 
 
+def update_article(db: Session, article_id: int, article_update: schemas.ArticleBase):
+    db_article = get_article(db, article_id=article_id)
+    if db_article:
+        for key, value in article_update.dict().items():
+            setattr(db_article, key, value)
+        db.commit()
+        db.refresh(db_article)
+        return db_article
+    else:
+        raise HTTPException(status_code=404, detail="Article not found")
+
+def delete_article(db: Session, article_id: int):
+    db_article = get_article(db, article_id=article_id)
+    if db_article:
+        db.delete(db_article)
+        db.commit()
+    else:
+        raise HTTPException(status_code=404, detail="Article not found")
+
+
 def get_section(db: Session, section_id: int):
     return db.query(models.Section).filter(models.Section.id == section_id).first()
 
@@ -211,6 +231,26 @@ def create_section(db: Session, section: schemas.SectionCreate, country_id: int,
     return db_section
 
 
+def update_section(db: Session, section_id: int, section_update: schemas.SectionBase):
+    db_section = get_section(db, section_id=section_id)
+    if db_section:
+        for key, value in section_update.dict().items():
+            setattr(db_section, key, value)
+        db.commit()
+        db.refresh(db_section)
+        return db_section
+    else:
+        raise HTTPException(status_code=404, detail="Section not found")
+
+def delete_section(db: Session, section_id: int):
+    db_section = get_section(db, section_id=section_id)
+    if db_section:
+        db.delete(db_section)
+        db.commit()
+    else:
+        raise HTTPException(status_code=404, detail="Section not found")
+
+
 def get_subsection(db: Session, subsection_id: int):
     return db.query(models.Subsection).filter(models.Subsection.id == subsection_id).first()
 
@@ -223,6 +263,26 @@ def create_subsection(db: Session, subsection: schemas.SubsectionCreate, country
     db.commit()
     db.refresh(db_subsection)
     return db_subsection
+
+
+def update_subsection(db: Session, subsection_id: int, subsection_update: schemas.SubsectionBase):
+    db_subsection = get_subsection(db, subsection_id=subsection_id)
+    if db_subsection:
+        for key, value in subsection_update.dict().items():
+            setattr(db_subsection, key, value)
+        db.commit()
+        db.refresh(db_subsection)
+        return db_subsection
+    else:
+        raise HTTPException(status_code=404, detail="Subsection not found")
+
+def delete_subsection(db: Session, subsection_id: int):
+    db_subsection = get_subsection(db, subsection_id=subsection_id)
+    if db_subsection:
+        db.delete(db_subsection)
+        db.commit()
+    else:
+        raise HTTPException(status_code=404, detail="Subsection not found")
 
 
 def search_sections_by_keyword(db: Session, country_id: int, keyword: str, skip: int = 0, limit: int = 100):
