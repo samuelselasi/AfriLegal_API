@@ -41,3 +41,15 @@ async def read_subsection(subsection_id: int, db: Session = Depends(get_db)):
     if db_subsection is None:
         raise HTTPException(status_code=404, detail="Subsection not found")
     return db_subsection
+
+
+@router.put("/subsections/{subsection_id}", response_model=schemas.Subsection)
+async def update_subsection(
+    subsection_id: int, subsection_update: schemas.SubsectionBase, db: Session = Depends(get_db)
+):
+    return crud.update_subsection(db, subsection_id, subsection_update)
+
+@router.delete("/subsections/{subsection_id}", response_model=None)
+async def delete_subsection(subsection_id: int, db: Session = Depends(get_db)):
+    crud.delete_subsection(db, subsection_id)
+    return {"message": "Subsection deleted successfully"}

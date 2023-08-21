@@ -37,3 +37,16 @@ async def read_chapter(chapter_id: int, db: Session = Depends(get_db)):
     if db_chapter is None:
         raise HTTPException(status_code=404, detail="Chapter not found")
     return db_chapter
+
+
+@router.put("/chapters/{chapter_id}", response_model=schemas.Chapter)
+async def update_chapter(
+    chapter_id: int, chapter_update: schemas.ChapterBase, db: Session = Depends(get_db)
+):
+    return crud.update_chapter(db, chapter_id, chapter_update)
+
+
+@router.delete("/chapters/{chapter_id}", response_model=None)
+async def delete_chapter(chapter_id: int, db: Session = Depends(get_db)):
+    crud.delete_chapter(db, chapter_id)
+    return {"message": "Chapter deleted successfully"}

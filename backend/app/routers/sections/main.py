@@ -37,3 +37,15 @@ async def read_section(section_id: int, db: Session = Depends(get_db)):
     if db_section is None:
         raise HTTPException(status_code=404, detail="Section not found")
     return db_section
+
+
+@router.put("/sections/{section_id}", response_model=schemas.Section)
+async def update_section(
+    section_id: int, section_update: schemas.SectionBase, db: Session = Depends(get_db)
+):
+    return crud.update_section(db, section_id, section_update)
+
+@router.delete("/sections/{section_id}", response_model=None)
+async def delete_section(section_id: int, db: Session = Depends(get_db)):
+    crud.delete_section(db, section_id)
+    return {"message": "Section deleted successfully"}

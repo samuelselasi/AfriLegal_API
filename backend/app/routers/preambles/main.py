@@ -37,3 +37,16 @@ async def read_preamble(preamble_id: int, db: Session = Depends(get_db)):
     if db_preamble is None:
         raise HTTPException(status_code=404, detail="Preamble not found")
     return db_preamble
+
+
+@router.put("/preambles/{preamble_id}", response_model=schemas.Preamble)
+async def update_preamble(
+    preamble_id: int, preamble_update: schemas.PreambleBase, db: Session = Depends(get_db)
+):
+    return crud.update_preamble(db, preamble_id, preamble_update)
+
+
+@router.delete("/preambles/{preamble_id}", response_model=None)
+async def delete_preamble(preamble_id: int, db: Session = Depends(get_db)):
+    crud.delete_preamble(db, preamble_id)
+    return {"message": "Preamble deleted successfully"}

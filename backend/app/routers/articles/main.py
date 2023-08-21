@@ -37,3 +37,15 @@ async def read_article(article_id: int, db: Session = Depends(get_db)):
     if db_article is None:
         raise HTTPException(status_code=404, detail="Article not found")
     return db_article
+
+
+@router.put("/articles/{article_id}", response_model=schemas.Article)
+async def update_article(
+    article_id: int, article_update: schemas.ArticleBase, db: Session = Depends(get_db)
+):
+    return crud.update_article(db, article_id, article_update)
+
+@router.delete("/articles/{article_id}", response_model=None)
+async def delete_article(article_id: int, db: Session = Depends(get_db)):
+    crud.delete_article(db, article_id)
+    return {"message": "Article deleted successfully"}

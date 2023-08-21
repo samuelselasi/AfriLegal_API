@@ -46,3 +46,14 @@ async def read_region(region_id: int, db: Session = Depends(get_db)):
 async def create_country_for_region(
     region_id: int, country: schemas.CountryCreate, db: Session = Depends(get_db)):
     return crud.create_region_country(db=db, country=country, region_id=region_id)
+
+
+@router.put("/regions/{region_id}", response_model=schemas.Region)
+async def update_region(region_id: int, region_update: schemas.RegionBase, db: Session = Depends(get_db)):
+    return crud.update_region(db, region_id, region_update)
+
+
+@router.delete("/regions/{region_id}", response_model=None)
+async def delete_region(region_id: int, db: Session = Depends(get_db)):
+    crud.delete_region(db, region_id)
+    return {"message": "Region deleted successfully"}

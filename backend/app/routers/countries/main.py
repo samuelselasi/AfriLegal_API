@@ -30,3 +30,14 @@ async def create_country_for_region(
 async def read_countries(skip: int = 0, limit: int = 100, db: Session = Depends(get_db)):
     countries = crud.get_countries(db, skip=skip, limit=limit)
     return countries
+
+
+@router.put("/countries/{country_id}", response_model=schemas.Country)
+async def update_country(country_id: int, country_update: schemas.CountryBase, db: Session = Depends(get_db)):
+    return crud.update_country(db, country_id, country_update)
+
+
+@router.delete("/countries/{country_id}", response_model=None)
+async def delete_country(country_id: int, db: Session = Depends(get_db)):
+    crud.delete_country(db, country_id)
+    return {"message": "Country deleted successfully"}
