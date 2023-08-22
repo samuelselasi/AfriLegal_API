@@ -1,8 +1,8 @@
 from typing import List
-
-from fastapi import Depends, FastAPI, HTTPException
+import io
+from fastapi import Depends, FastAPI, HTTPException, File, UploadFile
 from sqlalchemy.orm import Session
-
+from fastapi.responses import StreamingResponse
 from . import crud, models, schemas
 from .database import SessionLocal, engine
 
@@ -315,3 +315,18 @@ def search_articles_by_keyword(
         db, country_id=country_id, keyword=keyword, skip=skip, limit=limit
     )
     return articles
+
+
+@app.post("/upload/")
+def upload_pdf(file: UploadFile = File(...), db: Session = Depends(get_db)):
+    pdf_content = file.file.read()
+    pdf_data = schemas.PDFCreate(title=file.filename, content=pdf_content)
+    db_pdf = crud.create_pdf(db, pdf_data)
+    return {"message": "PDF uploaded successfully", "pdf_id": db_pdf.id}
+
+@app.get("/pdf/{pdf_id}/")
+def get_pdf(pdf_id: int, db: Session = Depends(get_db)):
+    pdf = crud.get_pdf(db, pdf_id)
+    if pdf:
+        return StreamingResponse(io.BytesIO(pdf.content), media_type="application/pdf")
+    return {"message": "PDF not found"}

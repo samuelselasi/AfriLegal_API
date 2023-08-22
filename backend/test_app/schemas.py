@@ -159,3 +159,16 @@ class Subsection(SubsectionBase):
 
     class Config:
         orm_mode = True
+
+
+class PDFBase(BaseModel):
+    title: str
+
+class PDFCreate(PDFBase):
+    content: bytes
+
+class PDF(PDFBase):
+    id: int
+
+    class Config:
+        orm_mode = True

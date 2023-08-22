@@ -297,3 +297,14 @@ def search_chapters_by_keyword(db: Session, country_id: int, keyword: str, skip:
 
 def search_articles_by_keyword(db: Session, country_id: int, keyword: str, skip: int = 0, limit: int = 100):
     return db.query(models.Article).filter(models.Article.country_id == country_id, models.Article.title.ilike(f'%{keyword}%')).offset(skip).limit(limit).all()
+
+
+def create_pdf(db: Session, pdf: schemas.PDFCreate):
+    db_pdf = models.PDFDocument(**pdf.dict())
+    db.add(db_pdf)
+    db.commit()
+    db.refresh(db_pdf)
+    return db_pdf
+
+def get_pdf(db: Session, pdf_id: int):
+    return db.query(models.PDFDocument).filter(models.PDFDocument.id == pdf_id).first()

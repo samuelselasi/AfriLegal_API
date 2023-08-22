@@ -1,5 +1,5 @@
 """Module that defines tables"""
-from sqlalchemy import Boolean, Column, ForeignKey, Integer, String
+from sqlalchemy import Boolean, Column, ForeignKey, Integer, String, LargeBinary
 from sqlalchemy.orm import relationship
 from .database import Base
 
@@ -140,3 +140,12 @@ class Subsection(Base):
     chapter = relationship("Chapter", back_populates="subsections")
     article = relationship("Article", back_populates="subsections")
     section = relationship("Section", back_populates="subsections")
+
+
+class PDFDocument(Base):
+    """Class that defines pdf attributes"""
+    __tablename__ = "pdf_documents"
+
+    id = Column(Integer, primary_key=True, index=True)
+    title = Column(String)
+    content = Column(LargeBinary)
