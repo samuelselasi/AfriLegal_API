@@ -1,5 +1,7 @@
-from fastapi import Depends, FastAPI
+#!/usr/bin/python3
+"""Module to initialize routers and endpoints"""
 
+from fastapi import FastAPI
 from app.routers.users import main as users
 from app.routers.items import main as items
 from app.routers.regions import main as regions
@@ -28,4 +30,5 @@ app.include_router(search.router, tags=["Search"])
 
 @app.get("/")
 async def root():
+    """Function that returns a default message when the root url is hit"""
     return {"message": "Welcome to AfriLegal API"}
