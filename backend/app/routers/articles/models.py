@@ -1,4 +1,6 @@
+#!/usr/bin/python3
 """Module that defines tables"""
+
 from sqlalchemy import Boolean, Column, ForeignKey, Integer, String
 from sqlalchemy.orm import relationship
 from .database import Base

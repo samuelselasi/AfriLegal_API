@@ -1,4 +1,6 @@
+#!/usr/bin/python3
 """Module that defines orm schemas for tables"""
+
 from typing import List, Union
 from pydantic import BaseModel
 
