@@ -1,12 +1,12 @@
 #!/usr/bin/python3
 """Module that defines utilities"""
 
+import jwt
 import random
 import string
-from datetime import datetime, timedelta
 from typing import Optional
-import jwt
 from api.config import settings
+from datetime import datetime, timedelta
 
 uppercase_and_digits = string.ascii_uppercase + string.digits
 lowercase_and_digits = string.ascii_lowercase + string.digits

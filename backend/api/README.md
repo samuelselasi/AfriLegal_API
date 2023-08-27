@@ -1,14 +1,22 @@
 # FastAPI Endpoints
 
-This repository contains FastAPI endpoints for managing a hierarchical structure of constitution data, including users, items, regions, countries, preambles, chapters, articles, and subsections. These endpoints allow you to create, retrieve, and manage various components of the hierarchical structure.
+##### This repository contains FastAPI endpoints for managing a hierarchical structure of constitution data, including `users`, `items`, `regions`, `countries`, `preambles`, `chapters`, `articles`, `secions` and `subsections`. 
+
+These endpoints allow you to `create`, `retrieve`, `update` and `delete` various components of the hierarchical structure.
 
 ## Setup
 
-1. Clone this repository to your local machine.
-2. Install the required dependencies using `pip install -r requirements.txt`.
-3. Start the FastAPI app by running `uvicorn main:app --reload`.
+1. Clone [this](https://github.com/samuelselasi/AfriLegal_API.git) repository to your local machine.
+2. Install the required dependencies with the following comand:
+```
+pip install -r requirements.txt
+```
+3. Change directory to the `backend` folders and Start the FastAPI swagger by running this command:
+```
+uvicorn api.main:app --reload
+```
 
-## Endpoints
+## Endpoints & URLs
 
 ### Users
 

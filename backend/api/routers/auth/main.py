@@ -1,5 +1,5 @@
 #!/usr/bin/python3
-"""Module that defines endpoints for articles"""
+"""Module that defines endpoints for authentication"""
 
 from typing import List
 from fastapi import Depends, HTTPException, BackgroundTasks, APIRouter
