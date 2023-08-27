@@ -1,8 +1,6 @@
 from typing import List
-
-from fastapi import Depends, FastAPI, HTTPException, APIRouter
+from fastapi import Depends, APIRouter
 from sqlalchemy.orm import Session
-
 from . import crud, models, schemas
 from .database import SessionLocal, engine
 
@@ -21,23 +19,38 @@ def get_db():
 
 
 @router.post("/regions/{region_id}/country/", response_model=schemas.Country)
-async def create_country_for_region(
-    region_id: int, country: schemas.CountryCreate, db: Session = Depends(get_db)):
-    return crud.create_region_country(db=db, country=country, region_id=region_id)
+async def create_country_for_region(region_id: int,
+                                    country: schemas.CountryCreate,
+                                    db: Session = Depends(get_db)):
+    """Endpoint to create a country based on region_id"""
+
+    return crud.create_region_country(db=db,
+                                      country=country,
+                                      region_id=region_id)
 
 
 @router.get("/countries/", response_model=List[schemas.Country])
-async def read_countries(skip: int = 0, limit: int = 100, db: Session = Depends(get_db)):
+async def read_countries(skip: int = 0,
+                         limit: int = 100,
+                         db: Session = Depends(get_db)):
+    """Endpoint to read all countries"""
+
     countries = crud.get_countries(db, skip=skip, limit=limit)
     return countries
 
 
 @router.put("/countries/{country_id}", response_model=schemas.Country)
-async def update_country(country_id: int, country_update: schemas.CountryBase, db: Session = Depends(get_db)):
+async def update_country(country_id: int,
+                         country_update: schemas.CountryBase,
+                         db: Session = Depends(get_db)):
+    """Endpoint to update a country based on its id"""
+
     return crud.update_country(db, country_id, country_update)
 
 
 @router.delete("/countries/{country_id}", response_model=None)
 async def delete_country(country_id: int, db: Session = Depends(get_db)):
+    """Endpoint to delete a country based on its id"""
+
     crud.delete_country(db, country_id)
     return {"message": "Country deleted successfully"}

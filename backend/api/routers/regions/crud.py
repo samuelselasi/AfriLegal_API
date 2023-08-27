@@ -23,6 +23,18 @@ def create_region(db: Session, region: schemas.RegionCreate):
     return db_region
 
 
+def get_country(db: Session, country_id: int):
+    return db.query(models.Country).filter(models.Country.id == country_id).first()
+
+
+def create_region_country(db: Session, country: schemas.CountryCreate, region_id: int):
+    db_country = models.Country(**country.dict(), region_id=region_id)
+    db.add(db_country)
+    db.commit()
+    db.refresh(db_country)
+    return db_country
+
+
 def update_region(db: Session, region_id: int, region_update: schemas.RegionBase):
     db_region = get_region(db, region_id=region_id)
     if db_region:

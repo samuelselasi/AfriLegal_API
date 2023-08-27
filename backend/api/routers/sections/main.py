@@ -21,9 +21,16 @@ def get_db():
 
 
 @router.post("/sections/", response_model=schemas.Section)
-async def create_section_for_country_chapter_article(
-    country_id: int, chapter_id: int, article_id: int, section: schemas.SectionCreate, db: Session = Depends(get_db)):
-    return crud.create_section(db=db, section=section, country_id=country_id, chapter_id=chapter_id, article_id=article_id)
+async def create_section_for_country_chapter_article(country_id: int,
+                                                     chapter_id: int,
+                                                     article_id: int,
+                                                     section: schemas.SectionCreate,
+                                                     db: Session = Depends(get_db)):
+    return crud.create_section(db=db,
+                               section=section,
+                               country_id=country_id,
+                               chapter_id=chapter_id,
+                               article_id=article_id)
 
 @router.get("/sections/", response_model=List[schemas.Section])
 async def read_sections_by_country_chapter_article(

@@ -19,8 +19,8 @@ from api.routers.subsections import main as subsections
 app = FastAPI()
 
 
-app.include_router(auth.router, tags=["Authentication"])
-app.include_router(user.router, tags=["User"])
+#app.include_router(auth.router, tags=["Authentication"])
+#app.include_router(user.router, tags=["User"])
 app.include_router(regions.router, tags=["Regions"])
 app.include_router(countries.router, tags=["Countries"])
 app.include_router(preambles.router, tags=["Preambles"])
