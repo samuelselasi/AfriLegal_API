@@ -12,7 +12,7 @@
 This router contains files for handling
 endpoints that:
 
-* Reads -> `GET`),
+* Reads -> `GET`,
 * Creates -> `POST`,
 * Updates -> `PUT` or `PATCH` *and*
 * Deletes -> `DELETE`
