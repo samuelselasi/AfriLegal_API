@@ -3,9 +3,7 @@
 from sqlalchemy.orm import Session
 from . import models, schemas
 from .database import get_db
-
 import sys
-
 import jwt
 import sqlalchemy
 from api import utils
@@ -13,7 +11,6 @@ from api.exceptions import (ExpectationFailure, NotFoundError, UnAcceptableError
                         UnAuthorised)
 from fastapi import Depends, HTTPException
 from sqlalchemy.exc import IntegrityError
-
 from sqlalchemy import text
 from ..auth.models import ResetPasswordCodes, RevokedToken
 
@@ -21,7 +18,7 @@ from ..auth.models import ResetPasswordCodes, RevokedToken
 
 async def is_token_blacklisted(token: str, db: Session):
     res = db.query(RevokedToken).filter(RevokedToken.jti ==
-                                        token).first()  # GET EXPIRED TOKENS FROM DB
+                                        token).first()
     if res is None:
         return False
     return True
@@ -225,14 +222,6 @@ async def read_hash_code(code: str, db: Session):
 
     return result_list
 
-#async def read_hash_code(code: str, db: Session):
-    #res = db.execute(
-        #"""SELECT id, code, user_id, user_email, status, date_created, date_modified FROM public.reset_password_codes where code=:code""", {'code': code})
-    #res = res.fetchall()
-    #return res
-
-
-# READ HASH TABLE
 
 async def read_hash_table(db: Session):
     res = db.execute(
@@ -260,17 +249,6 @@ async def read_hash_table(db: Session):
         result_list.append(row_dict)
 
     return result_list
-
-#async def read_hash_table(db: Session):
-    #res = db.execute(text(""" SELECT id, code, user_id, user_email, status, date_created, date_modified FROM public.reset_password_codes; """))
-    #print (res)
-    #return [dict(row) for row in res]
-
-
-# async def read_hash_table(db: Session):
-  #  res = db.execute(text(""" SELECT id, code, user_id, user_email, status, date_created, date_modified FROM public.reset_password_codes; """))
-   # res = res.fetchall()
-    #return res
 
 
 # RESET PASSWORD BY ID

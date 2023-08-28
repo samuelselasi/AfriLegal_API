@@ -21,16 +21,7 @@ def get_db():
         db.close()
 
 
-@router.post("/chapters/", response_model=schemas.Chapter)
-async def create_chapter_for_country(country_id: int,
-                                     chapter: schemas.ChapterCreate,
-                                     db: Session = Depends(get_db)):
-    """Endpoint to create a chapter for a country"""
-
-    return crud.create_chapter(db=db, chapter=chapter, country_id=country_id)
-
-
-@router.get("/chapters/", response_model=List[schemas.Chapter])
+@router.get("/get_chapters", response_model=List[schemas.Chapter])
 async def read_chapters_by_country(country_id: int,
                                    skip: int = 0,
                                    limit: int = 100,
@@ -43,9 +34,9 @@ async def read_chapters_by_country(country_id: int,
     return chapters
 
 
-@router.get("/chapters/{chapter_id}", response_model=schemas.Chapter)
+@router.get("/get_chapter/{chapter_id}", response_model=schemas.Chapter)
 async def read_chapter(chapter_id: int, db: Session = Depends(get_db)):
-    """Endpoint to get chapetr based on id"""
+    """Endpoint to get chapter based on id"""
 
     db_chapter = crud.get_chapter(db, chapter_id=chapter_id)
     if db_chapter is None:
@@ -53,7 +44,16 @@ async def read_chapter(chapter_id: int, db: Session = Depends(get_db)):
     return db_chapter
 
 
-@router.put("/chapters/{chapter_id}", response_model=schemas.Chapter)
+@router.post("/create_chapter/{country_id}", response_model=schemas.Chapter)
+async def create_chapter_for_country(country_id: int,
+                                     chapter: schemas.ChapterCreate,
+                                     db: Session = Depends(get_db)):
+    """Endpoint to create a chapter for a country"""
+
+    return crud.create_chapter(db=db, chapter=chapter, country_id=country_id)
+
+
+@router.put("/update_chapter/{chapter_id}", response_model=schemas.Chapter)
 async def update_chapter(chapter_id: int,
                          chapter_update: schemas.ChapterBase,
                          db: Session = Depends(get_db)):
@@ -62,7 +62,7 @@ async def update_chapter(chapter_id: int,
     return crud.update_chapter(db, chapter_id, chapter_update)
 
 
-@router.delete("/chapters/{chapter_id}", response_model=None)
+@router.delete("/delete_chapter/{chapter_id}", response_model=None)
 async def delete_chapter(chapter_id: int, db: Session = Depends(get_db)):
     """Endpoint to delete a chapter by id"""
 

@@ -1,5 +1,4 @@
 from typing import List
-
 from fastapi import Depends, HTTPException, APIRouter
 from sqlalchemy.orm import Session
 from . import crud, models, schemas
@@ -19,18 +18,7 @@ def get_db():
         db.close()
 
 
-@router.post("/preambles/", response_model=schemas.Preamble)
-async def create_preamble_for_country(country_id: int,
-                                      preamble: schemas.PreambleCreate,
-                                      db: Session = Depends(get_db)):
-    """Endpoint to create preamble based on country_id"""
-
-    return crud.create_preamble(db=db,
-                                preamble=preamble,
-                                country_id=country_id)
-
-
-@router.get("/preambles/", response_model=List[schemas.Preamble])
+@router.get("/get_preambles", response_model=List[schemas.Preamble])
 async def read_preambles_by_country(country_id: int,
                                     skip: int = 0,
                                     limit: int = 100,
@@ -54,7 +42,18 @@ async def read_preamble(preamble_id: int, db: Session = Depends(get_db)):
     return db_preamble
 
 
-@router.put("/preambles/{preamble_id}", response_model=schemas.Preamble)
+@router.post("/create_preamble/{country_id}", response_model=schemas.Preamble)
+async def create_preamble_for_country(country_id: int,
+                                      preamble: schemas.PreambleCreate,
+                                      db: Session = Depends(get_db)):
+    """Endpoint to create preamble based on country_id"""
+
+    return crud.create_preamble(db=db,
+                                preamble=preamble,
+                                country_id=country_id)
+
+
+@router.put("/update_preamble/{preamble_id}", response_model=schemas.Preamble)
 async def update_preamble(preamble_id: int,
                           preamble_update: schemas.PreambleBase,
                           db: Session = Depends(get_db)):
@@ -63,7 +62,7 @@ async def update_preamble(preamble_id: int,
     return crud.update_preamble(db, preamble_id, preamble_update)
 
 
-@router.delete("/preambles/{preamble_id}", response_model=None)
+@router.delete("/delete_preamble/{preamble_id}", response_model=None)
 async def delete_preamble(preamble_id: int, db: Session = Depends(get_db)):
     """Endpoint to delete preamble based on its id"""
 

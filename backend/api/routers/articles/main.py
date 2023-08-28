@@ -21,7 +21,7 @@ def get_db():
         db.close()
 
 
-@router.get("/articles/", response_model=List[schemas.Article])
+@router.get("/get_articles", response_model=List[schemas.Article])
 async def read_articles_by_country_and_chapter(country_id: int,
                                                chapter_id: int,
                                                skip: int = 0,
@@ -37,7 +37,7 @@ async def read_articles_by_country_and_chapter(country_id: int,
     return articles
 
 
-@router.get("/articles/{article_id}", response_model=schemas.Article)
+@router.get("/get_article/{article_id}", response_model=schemas.Article)
 async def read_article(article_id: int, db: Session = Depends(get_db)):
     """Endpoint to gret an article based on its id"""
 
@@ -47,20 +47,21 @@ async def read_article(article_id: int, db: Session = Depends(get_db)):
     return db_article
 
 
-@router.post("/articles/", response_model=schemas.Article)
+@router.post("/create_article/{country_id}/{chapter_id}",
+             response_model=schemas.Article)
 async def create_article_for_country_and_chapter(country_id: int,
                                                  chapter_id: int,
                                                  article:
                                                  schemas.ArticleCreate,
                                                  db:
                                                  Session = Depends(get_db)):
-    """Endpoint to create an country_id, article_id and chapter_id"""
+    """Endpoint to create an article based on country_id and chapter_id"""
 
     return crud.create_article(db=db, article=article, country_id=country_id,
                                chapter_id=chapter_id)
 
 
-@router.put("/articles/{article_id}", response_model=schemas.Article)
+@router.put("/update_article/{article_id}", response_model=schemas.Article)
 async def update_article(article_id: int, article_update: schemas.ArticleBase,
                          db: Session = Depends(get_db)):
     """Endpoint to update an article based on its id"""
@@ -68,7 +69,7 @@ async def update_article(article_id: int, article_update: schemas.ArticleBase,
     return crud.update_article(db, article_id, article_update)
 
 
-@router.delete("/articles/{article_id}", response_model=None)
+@router.delete("/delete_article/{article_id}", response_model=None)
 async def delete_article(article_id: int, db: Session = Depends(get_db)):
     """Endpoint to delete an article based on its id"""
 

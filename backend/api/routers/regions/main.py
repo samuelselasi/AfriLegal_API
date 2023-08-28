@@ -20,7 +20,27 @@ def get_db():
         db.close()
 
 
-@router.post("/regions/", response_model=schemas.Region)
+@router.get("/get_regions", response_model=List[schemas.Region])
+async def read_regions(skip: int = 0,
+                       limit: int = 100,
+                       db: Session = Depends(get_db)):
+    """Endpooint to read all regions"""
+
+    regions = crud.get_regions(db, skip=skip, limit=limit)
+    return regions
+
+
+@router.get("/get_region/{region_id}", response_model=schemas.Region)
+async def read_region(region_id: int, db: Session = Depends(get_db)):
+    """Endpoint to read region based on its id"""
+
+    db_region = crud.get_region(db, region_id=region_id)
+    if db_region is None:
+        raise HTTPException(status_code=404, detail="Region not found")
+    return db_region
+
+
+@router.post("/create_region", response_model=schemas.Region)
 async def create_region(region: schemas.RegionCreate,
                         db: Session = Depends(get_db)):
     """Endpoint to create a region"""
@@ -32,27 +52,7 @@ async def create_region(region: schemas.RegionCreate,
     return crud.create_region(db=db, region=region)
 
 
-@router.get("/regions/", response_model=List[schemas.Region])
-async def read_regions(skip: int = 0,
-                       limit: int = 100,
-                       db: Session = Depends(get_db)):
-    """Endpooint to read all regions"""
-
-    regions = crud.get_regions(db, skip=skip, limit=limit)
-    return regions
-
-
-@router.get("/regions/{region_id}", response_model=schemas.Region)
-async def read_region(region_id: int, db: Session = Depends(get_db)):
-    """Endpoint to read region based on its id"""
-
-    db_region = crud.get_region(db, region_id=region_id)
-    if db_region is None:
-        raise HTTPException(status_code=404, detail="Region not found")
-    return db_region
-
-
-@router.post("/regions/{region_id}/country/", response_model=schemas.Country)
+# @router.post("/create_country/{region_id}", response_model=schemas.Country)
 async def create_country_for_region(region_id: int,
                                     country: schemas.CountryCreate,
                                     db: Session = Depends(get_db)):
@@ -61,7 +61,7 @@ async def create_country_for_region(region_id: int,
     return crud.create_region_country(db=db, country=country, region_id=region_id)
 
 
-@router.put("/regions/{region_id}", response_model=schemas.Region)
+@router.put("/update_region/{region_id}", response_model=schemas.Region)
 async def update_region(region_id: int,
                         region_update: schemas.RegionBase,
                         db: Session = Depends(get_db)):
@@ -70,8 +70,9 @@ async def update_region(region_id: int,
     return crud.update_region(db, region_id, region_update)
 
 
-@router.delete("/regions/{region_id}", response_model=None)
+@router.delete("/delete_region/{region_id}", response_model=None)
 async def delete_region(region_id: int, db: Session = Depends(get_db)):
     """Endpoint to delete region based on its id"""
+
     crud.delete_region(db, region_id)
     return {"message": "Region deleted successfully"}
