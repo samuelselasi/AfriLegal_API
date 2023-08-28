@@ -14,7 +14,7 @@ endpoints that:
 
 * Reads -> `GET`,
 * Creates -> `POST`,
-* Updates -> `PUT` or `PATCH` *and*
+* Updates -> `PUT` or `PATCH` and
 * Deletes -> `DELETE`
 
 articles of the constitution
@@ -115,5 +115,3 @@ of a particular country.
 * **POST**: `/create_article/{country_id}/{chapter_id}`
 * **PUT**: `/update_article/{article_id}`
 * **DELETE**: `/delete_article/{article_id}`
-
-***fin***
