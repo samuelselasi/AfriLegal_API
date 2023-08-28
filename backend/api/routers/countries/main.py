@@ -1,8 +1,11 @@
+#!/usr/bin/python3
+"""Module that defines endpoints for countries"""
+
 from typing import List
-from fastapi import Depends, APIRouter
 from sqlalchemy.orm import Session
 from . import crud, models, schemas
 from .database import SessionLocal, engine
+from fastapi import Depends, APIRouter, HTTPException
 
 models.Base.metadata.create_all(bind=engine)
 
@@ -26,6 +29,16 @@ async def read_countries(skip: int = 0,
 
     countries = crud.get_countries(db, skip=skip, limit=limit)
     return countries
+
+
+@router.get("/get_country/{country_id}", response_model=schemas.Country)
+async def read_country(country_id: int, db: Session = Depends(get_db)):
+    """Endpoint to read country based on its id"""
+
+    db_country = crud.get_country(db, country_id=country_id)
+    if db_country is None:
+        raise HTTPException(status_code=404, detail="Country not found")
+    return db_country
 
 
 @router.post("/create_country/{region_id}", response_model=schemas.Country)
