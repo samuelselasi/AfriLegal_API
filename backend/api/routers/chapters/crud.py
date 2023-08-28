@@ -1,9 +1,9 @@
 #!/usr/bin/python3
 """Module that defines CRUD functions"""
 
+from . import models, schemas
 from fastapi import HTTPException
 from sqlalchemy.orm import Session
-from . import models, schemas
 
 
 def get_chapter(db: Session, chapter_id: int):
