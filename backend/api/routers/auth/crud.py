@@ -43,8 +43,8 @@ async def authenticate(payload: schemas.Auth, db: Session):
                 refresh_token = utils.create_token(data={'email':
                                                          payload.email,
                                                          'id': user.id})
-                return {"access_token": access_token.decode("utf-8"),
-                        "refresh_token": refresh_token.decode("utf-8"),
+                return {"access_token": access_token,
+                        "refresh_token": refresh_token,
                         "user": user}
             else:
                 raise UnAuthorised('Invalid password')
@@ -54,8 +54,8 @@ async def authenticate(payload: schemas.Auth, db: Session):
         raise HTTPException(status_code=401, detail="Unauthorized")
     except NotFoundError:
         raise HTTPException(status_code=404, detail="User not found")
-    except Exception:
-        print("Unhandled exception:", Exception)
+    except Exception as e:
+        print("Unhandled exception:", repr(e))
         raise HTTPException(status_code=500,
                             detail="An internal server error occurred")
 
@@ -96,8 +96,8 @@ async def refresh_token(payload: schemas.Token, db: Session):
                                                      'id': data.get('id')},
                                                expires_delta=timedelta(
                                                    minutes=RTD))
-            return {'access_token': access_token.decode("utf-8"),
-                    'refresh_token': refresh_token.decode("utf-8")}
+            return {'access_token': access_token,
+                    'refresh_token': refresh_token}
         else:
             raise ExpectationFailure()
     except UnAcceptableError:
@@ -112,8 +112,8 @@ async def refresh_token(payload: schemas.Token, db: Session):
     except jwt.exceptions.DecodeError:
         raise HTTPException(status_code=500,
                             detail="{}".format(sys.exc_info()[1]))
-    except Exception:
-        print("{}".format(sys.exc_info()[1]))
+    except Exception as e:
+        print("Unhandled exception:", repr(e))
         raise HTTPException(status_code=500)
 
 

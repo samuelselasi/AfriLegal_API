@@ -16,7 +16,7 @@ from api.routers.countries import main as countries
 from api.routers.preambles import main as preambles
 from api.routers.subsections import main as subsections
 
-app = FastAPI()
+app = FastAPI(debug=True)
 
 
 app.include_router(auth.router, tags=["Authentication"])

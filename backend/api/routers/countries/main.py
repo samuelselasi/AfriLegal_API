@@ -21,7 +21,7 @@ def get_db():
         db.close()
 
 
-@router.get("/get_countries/", response_model=List[schemas.Country])
+@router.get("/get_countries", response_model=List[schemas.Country])
 async def read_countries(skip: int = 0,
                          limit: int = 100,
                          db: Session = Depends(get_db)):
