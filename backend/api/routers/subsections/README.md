@@ -1,4 +1,4 @@
-# Articles Router
+# Subsections Router
 
 ## Content
 
@@ -17,7 +17,7 @@ endpoints that:
 * Updates -> `PUT` or `PATCH` and
 * Deletes -> `DELETE`
 
-articles of the constitution
+subsections of the constitution
 of a particular country.
 
 
