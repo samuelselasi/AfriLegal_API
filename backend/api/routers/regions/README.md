@@ -1,4 +1,4 @@
-# Articles Router
+# Regions Router
 
 ## Content
 
@@ -17,8 +17,8 @@ endpoints that:
 * Updates -> `PUT` or `PATCH` and
 * Deletes -> `DELETE`
 
-articles of the constitution
-of a particular country.
+various regions of the African
+continent.
 
 
 ## Files
@@ -28,24 +28,10 @@ of a particular country.
 	                    ORM integration.
 	                    Classes include:
 
-	* `Country`-> instances:
+	* `Refion`-> instances:
 		* id
 		* name
-		* region_id
-
-	* `Chapter`-> instances:
-		* id
-		* number
-		* text
-		* country_id
-
-	* `Article` -> instances:
-		* id
-		* country_id
-		* chapter_id
-		* number
-		* title
-		* text
+		* is_active
 
 * [schemas.py](./schemas.py): Contains classes
 			      that define schemas
@@ -63,55 +49,52 @@ of a particular country.
 		* `id`: int
 		* `region_id`: int
 
-	* `ChapterBase` -> instances:
-                * `number`: int
-		* `text`: str
+	* `RegionBase` -> instances:
+                * `name`: str
 
-	* `ChapterCreate` -> instances:
-                * `ChapterBase`: *pass*
+	* `RegionCreate` -> instances:
+                * `RegionBase`: *pass*
 
-	* `Chapter` -> instances:
+	* `Region` -> instances:
 		* `id`: int
-		* `country`: Country
+		* `is_active`: bool
+		* `countries`: List[Country]
 
-	* `ArticleBase` -> instances:
-		* `number`: int
-		* `title`: str
-		* `text`: str
-
-	* `ArticleCreate` -> isnstances:
-		* `ArticleBase`: *pass*
-
-	* `Article` -> instances:
+	* `Region_` -> instances:
 		* `id`: int
-		* `country`: Country
-		* `chapter`: Chapter
 
 * [crud.py](./crud.py): Contains functions that
 			creates, reads, updates
 			and deletes articles.
 			They include:
-	* get_article
-	* get_articles_by_country_and_chapter
-	* create_article
-	* update_article
-	* delete_article
+	* get_region_by_id
+	* get_region_by_name
+	* get_regions_and_countries
+	* get_regions
+	* create_region
+	* update_region
+	* delete_region
+
 * [main.py](./main.py): Contains functions that
 			defines enpoints to call
 			**CRUD** functions. They
 			include:
 
-	* `read_articles_by_country_and_chapter`
-	* `read_article`
-	* `create_article_for_country_and_chapter`
-	* `update_article`
-	* `delete_article`
+	* `read_regions`
+	* `read_regions_and_countries`
+	* `read_region_id`
+	* `read_region_name`
+	* `create_region`
+	* `update_region`
+	* `delete_region`
 
 
 ## Endpoints
 
-* **GET**: `/get_articles`
-* **GET**: `/get_article/{article_id}`
-* **POST**: `/create_article/{country_id}/{chapter_id}`
-* **PUT**: `/update_article/{article_id}`
-* **DELETE**: `/delete_article/{article_id}`
+* **GET**: `/get_regions`
+* **GET**: `/get_regions_countries`
+* **GET**: `/get_region_by_id/{region_id}`
+* **GET**: `/get_region_by_name/region_name`
+* **POST**: `/create_region`
+* **PUT**: `/update_region/{region_id}`
+* **DELETE**: `/delete_region/{region_id}`
