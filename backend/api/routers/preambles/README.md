@@ -1,4 +1,4 @@
-# Articles Router
+# Preambles Router
 
 ## Content
 
@@ -17,7 +17,7 @@ endpoints that:
 * Updates -> `PUT` or `PATCH` and
 * Deletes -> `DELETE`
 
-articles of the constitution
+preambles of the constitution
 of a particular country.
 
 

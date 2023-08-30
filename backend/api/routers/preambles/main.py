@@ -1,8 +1,8 @@
 from typing import List
-from fastapi import Depends, HTTPException, APIRouter
 from sqlalchemy.orm import Session
 from . import crud, models, schemas
 from .database import SessionLocal, engine
+from fastapi import Depends, HTTPException, APIRouter
 
 models.Base.metadata.create_all(bind=engine)
 

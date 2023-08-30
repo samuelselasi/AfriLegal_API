@@ -1,15 +1,30 @@
 """Module that defines CRUD functions"""
-from sqlalchemy.orm import Session
+
 from . import models, schemas
+from fastapi import HTTPException
+from sqlalchemy.orm import Session
 
 
 def get_preamble(db: Session, preamble_id: int):
-    return db.query(models.Preamble).filter(models.Preamble.id == preamble_id).first()
+    """Function to get preamble based on its id"""
 
-def get_preambles_by_country(db: Session, country_id: int, skip: int = 0, limit: int = 100):
-    return db.query(models.Preamble).filter(models.Preamble.country_id == country_id).offset(skip).limit(limit).all()
+    return db.query(models.Preamble).filter(models.Preamble.id ==
+                                            preamble_id).first()
 
-def create_preamble(db: Session, preamble: schemas.PreambleCreate, country_id: int):
+
+def get_preambles_by_country(db: Session, country_id: int, skip: int = 0,
+                             limit: int = 100):
+    """Function to get preamble based on country id"""
+
+    return db.query(models.Preamble).filter(models.Preamble.country_id ==
+                                            country_id).offset(skip).limit(
+                                                    limit).all()
+
+
+def create_preamble(db: Session, preamble: schemas.PreambleCreate,
+                    country_id: int):
+    """Function to create preamble for a country"""
+
     db_preamble = models.Preamble(**preamble.dict(), country_id=country_id)
     db.add(db_preamble)
     db.commit()
@@ -17,7 +32,10 @@ def create_preamble(db: Session, preamble: schemas.PreambleCreate, country_id: i
     return db_preamble
 
 
-def update_preamble(db: Session, preamble_id: int, preamble_update: schemas.PreambleBase):
+def update_preamble(db: Session, preamble_id: int,
+                    preamble_update: schemas.PreambleBase):
+    """Function to update preamble of a country based on its id"""
+
     db_preamble = get_preamble(db, preamble_id=preamble_id)
     if db_preamble:
         for key, value in preamble_update.dict().items():
@@ -30,6 +48,8 @@ def update_preamble(db: Session, preamble_id: int, preamble_update: schemas.Prea
 
 
 def delete_preamble(db: Session, preamble_id: int):
+    """Funtion to delete preamble based on its id"""
+
     db_preamble = get_preamble(db, preamble_id=preamble_id)
     if db_preamble:
         db.delete(db_preamble)
