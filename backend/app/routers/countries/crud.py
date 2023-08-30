@@ -7,6 +7,10 @@ def get_countries(db: Session, skip: int = 0, limit: int = 100):
     return db.query(models.Country).offset(skip).limit(limit).all()
 
 
+def get_country(db: Session, country_id: int):
+    return db.query(models.Country).filter(models.Country.id == country_id).first()
+
+
 def create_region_country(db: Session, country: schemas.CountryCreate, region_id: int):
     db_country = models.Country(**country.dict(), region_id=region_id)
     db.add(db_country)
