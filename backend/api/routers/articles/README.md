@@ -102,15 +102,18 @@ of a particular country.
 			include:
 
 	* `read_articles_by_country_and_chapter`
+	* `read_articles_by_country`
 	* `read_article`
 	* `create_article_for_country_and_chapter`
 	* `update_article`
 	* `delete_article`
+	* `read_articles_by_country`
 
 
 ## Endpoints
 
-* **GET**: `/get_articles`
+* **GET**: `/get_articles_country`
+* **GET**: `/get_articles_chapter`
 * **GET**: `/get_article/{article_id}`
 * **POST**: `/create_article/{country_id}/{chapter_id}`
 * **PUT**: `/update_article/{article_id}`

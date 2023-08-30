@@ -21,13 +21,26 @@ def get_db():
         db.close()
 
 
-@router.get("/get_articles", response_model=List[schemas.Article])
+@router.get("/get_articles_country", response_model=List[schemas.Article])
+async def read_articles_by_country(country_id: int, skip: int = 0,
+                                   limit: int = 100,
+                                   db: Session = Depends(get_db)):
+    """Endpoint to get article based on country id"""
+
+    articles = crud.get_articles_by_country(db,
+                                            country_id=country_id,
+                                            skip=skip,
+                                            limit=limit)
+    return articles
+
+
+@router.get("/get_articles_chapter", response_model=List[schemas.Article])
 async def read_articles_by_country_and_chapter(country_id: int,
                                                chapter_id: int,
                                                skip: int = 0,
                                                limit: int = 100,
                                                db: Session = Depends(get_db)):
-    """Endpoint to get article based country_id & chapter_id"""
+    """Endpoint to get article based on country id & chapter id"""
 
     articles = crud.get_articles_by_country_and_chapter(db,
                                                         country_id=country_id,

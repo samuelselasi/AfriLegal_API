@@ -13,6 +13,15 @@ def get_article(db: Session, article_id: int):
                                            article_id).first()
 
 
+def get_articles_by_country(db: Session, country_id: int,
+                            skip: int = 0, limit: int = 100):
+    """Function that prints article by country_id"""
+
+    return db.query(models.Article).filter(models.Article.country_id ==
+                                           country_id).offset(skip).limit(
+                                                   limit).all()
+
+
 def get_articles_by_country_and_chapter(db: Session, country_id: int,
                                         chapter_id: int, skip: int = 0,
                                         limit: int = 100):
