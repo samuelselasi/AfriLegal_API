@@ -1,8 +1,8 @@
 from typing import List
-from fastapi import Depends, FastAPI, HTTPException, APIRouter
 from sqlalchemy.orm import Session
 from . import crud, models, schemas
 from .database import SessionLocal, engine
+from fastapi import Depends, HTTPException, APIRouter
 
 models.Base.metadata.create_all(bind=engine)
 
@@ -18,6 +18,36 @@ def get_db():
         db.close()
 
 
+@router.get("/get_section_by_country/{country_id}",
+            response_model=List[schemas.Section])
+async def read_sections_by_country(country_id: int,
+                                   skip: int = 0,
+                                   limit: int = 100,
+                                   db: Session = Depends(get_db)):
+    """Endpoint to read section with country id"""
+
+    sections = crud.get_sections_by_country(db, country_id=country_id,
+                                            skip=skip, limit=limit)
+    return sections
+
+
+@router.get("/get_section_by_country_and_chapter/{country_id}/{chapter_id}",
+            response_model=List[schemas.Section])
+async def read_sections_by_country_and_chapter(country_id: int,
+                                               chapter_id: int,
+                                               skip: int = 0,
+                                               limit: int = 100,
+                                               db: Session = Depends(get_db)):
+    """Endpoint to read section with country id and chapter id"""
+
+    sections = crud.get_sections_by_country_and_chapter(db,
+                                                        country_id=country_id,
+                                                        chapter_id=chapter_id,
+                                                        skip=skip,
+                                                        limit=limit)
+    return sections
+
+
 @router.get("/get_section/{country_id}/{chapter_id}/{article_id}",
             response_model=List[schemas.Section])
 async def read_sections_by_country_chapter_article(country_id: int,
@@ -25,19 +55,13 @@ async def read_sections_by_country_chapter_article(country_id: int,
                                                    article_id: int,
                                                    skip: int = 0,
                                                    limit: int = 100,
-                                                   db:
-                                                   Session = Depends(get_db)):
+                                                   db: Session = Depends(
+                                                       get_db)):
     """Endpoint to read section with country_id, chapter_id & article_id"""
 
-    s = crud.get_sections_by_country_and_chapter_and_article(db,
-                                                             country_id=
-                                                             country_id,
-                                                             chapter_id=
-                                                             chapter_id,
-                                                             article_id=
-                                                             article_id,
-                                                             skip=skip,
-                                                             limit=limit)
+    s = crud.get_sections_by_country_and_chapter_and_article(
+            db, country_id=country_id, chapter_id=chapter_id,
+            article_id=article_id, skip=skip, limit=limit)
     return s
 
 
