@@ -1,9 +1,10 @@
+#!/usr/bin/python3
+"""Module that defines endpoints for searches"""
+
 from typing import List
-
-from fastapi import Depends, APIRouter
 from sqlalchemy.orm import Session
-
 from . import crud, models, schemas
+from fastapi import Depends, APIRouter
 from .database import SessionLocal, engine
 
 models.Base.metadata.create_all(bind=engine)

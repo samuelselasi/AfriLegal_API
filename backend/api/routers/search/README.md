@@ -1,4 +1,4 @@
-# Articles Router
+# Search Router
 
 ## Content
 
@@ -12,13 +12,11 @@
 This router contains files for handling
 endpoints that:
 
-* Reads -> `GET`,
-* Creates -> `POST`,
-* Updates -> `PUT` or `PATCH` and
-* Deletes -> `DELETE`
+* Read -> `GET`,
 
-articles of the constitution
-of a particular country.
+from the constitution
+of a particular country based
+on a keyword.
 
 
 ## Files
