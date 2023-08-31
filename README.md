@@ -1,6 +1,8 @@
 # AfriLegal API
 ***Accessible Constitution API for African Countries***
 
+![api](https://github.com/samuelselasi/AfriLegal_API/assets/85158665/ad4eb40c-0865-4c0e-b37d-270e39aea959)
+
 ## Content
 
 * [About](#about)
