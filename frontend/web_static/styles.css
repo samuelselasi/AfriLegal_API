@@ -2,7 +2,7 @@
 :root {
   --main-white: #f0f0f0;
   --main-red: #be3144;
-  --main-blue: #45567d;
+  --main-blue: #E91E63;
   --main-gray: #303841;
 }
 
@@ -70,7 +70,7 @@ html {
 
 body {
   font-family: 'Poppins', sans-serif;
-  font-size: 1.8rem; /* 18px */
+  font-size: 1.4rem; /* 18px */
   font-weight: 400;
   line-height: 1.4;
   color: var(--main-white);
@@ -84,7 +84,7 @@ h2 {
 }
 
 h1 {
-  font-size: 6rem;
+  font-size: 12rem;
 }
 
 h2 {
@@ -136,8 +136,8 @@ img {
 
 .nav-list a {
   display: block;
-  font-size: 2.2rem;
-  padding: 2rem;
+  font-size: 1.5rem;
+  padding: 1rem;
 }
 
 .nav-list a:hover {
@@ -154,12 +154,12 @@ img {
   width: 100%;
   height: 100vh;
   background-color: #000;
-  background-image: linear-gradient(62deg, #3a3d40 0%, #181719 100%);
+  background-image: linear-gradient(62deg, #000000 0%, #303841 100%);
 }
 
 .welcome-section > p {
-  font-size: 3rem;
-  font-weight: 200;
+  font-size: 2.5rem;
+  font-weight: 500;
   font-style: italic;
   color: var(--main-red);
 }
@@ -169,8 +169,8 @@ img {
 .projects-section {
   text-align: center;
   padding: 10rem 2rem;
-  background: var(--main-blue);
-  background-image: linear-gradient(62deg, #3a3d40 0%, #484e7e 100%);
+  background-color: #000;
+  background-image: linear-gradient(124deg, #000000 0%, #303841 100%);
 }
 
 .projects-section-header {
@@ -269,7 +269,8 @@ img {
   width: 100%;
   height: 80vh;
   padding: 0 2rem;
-  background: var(--main-gray);
+  background-color: #000;
+  background-image: linear-gradient(53deg, #000000 0%, #303841 100%);
 }
 
 .contact-section-header > h2 {
@@ -311,13 +312,14 @@ footer {
   font-weight: 300;
   display: flex;
   justify-content: space-evenly;
-  padding: 2rem;
+  padding: 1rem;
   background: var(--main-gray);
   border-top: 4px solid var(--main-red);
 }
 
 footer > p {
-  margin: 2rem;
+  margin: 1rem;
+  font-weight: 500;
 }
 
 footer i {
@@ -330,4 +332,3 @@ footer i {
     text-align: center;
   }
 }
-
