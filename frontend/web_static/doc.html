@@ -59,18 +59,39 @@
       <section class="main-section" id="User_models">
         <header>User Models</header>
         <article>
-          <p>This guide assumes you have the following basic background:</p>
+          <p>
+	    This is the first step towards accessing endpoints with athentication.
+	    The endpoints in this router makes it possible to create, read, update
+	    and delete a user. The following snippets show how to access these endpoints:
+	  </p>
 
           <ul>
             <li>
-              A general understanding of the Internet and the World Wide Web
-              (WWW).
+		    <strong>Create User</strong>
+		    <code>
+			    curl -X POST -H "Content-Type: application/json" -d '{ "email": "user@example.com", "password": "string", "user_type_id": 1, "status": true }' http://100.26.231.45:89/create_user
+		    </code>
+	    </li>
+	    <li>
+                    <strong>Read All Users</strong>
+                    <code>
+                            curl http://100.26.231.45:89/get_users
+                    </code>
             </li>
-            <li>Good working knowledge of HyperText Markup Language (HTML).</li>
-            <li>
-              Some programming experience. If you are new to programming, try
-              one of the tutorials linked on the main page about JavaScript.
+	    <li>
+                    <strong>Update User</strong>
+                    <code>
+                            curl -X POST -H "Content-Type: application/json" -d '{ "email": "user@example.com", "password": "string", "user_type_id": 1, "status": true }' http://100.26.231.45:89/create_user
+                    </code>
             </li>
+	    <li>
+                    <strong>Delete User</strong>
+                    <code>
+                            curl -X POST -H "Content-Type: application/json" -d '{ "email": "user@example.com", "password": "string", "user_type_id": 1, "status": true }' http://100.26.231.45:89/create_user
+                    </code>
+            </li>
+            <li>Update User</li>
+            <li>Delete User</li>
           </ul>
         </article>
       </section>
