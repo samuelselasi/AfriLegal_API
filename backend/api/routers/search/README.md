@@ -45,6 +45,24 @@ on a keyword.
 		* title
 		* text
 
+	* `Section` -> instances:
+		* id
+		* country_id
+		* chapter_id
+		* article_id
+		* number
+		* text
+
+	* `Subsection` -> instancs:
+		* id
+		* country_id
+		* chapter_id
+		* article_id
+		* section_id
+		* sub
+		* text
+
+
 * [schemas.py](./schemas.py): Contains classes
 			      that define schemas
 			      for entering into
@@ -85,31 +103,57 @@ on a keyword.
 		* `country`: Country
 		* `chapter`: Chapter
 
+	* `SectionBase` -> instances:
+		* `number`: int
+ 		* `text`: str
+
+	* `SectionCreate` -> isnstances:
+		* `SectionBase`: *pass*
+
+	* `Section` -> instances:
+		* `id`: int
+		* `country`: Country
+		* `chapter`: Chapter
+		* `article`: Article
+
+	* `SubsectionBase` -> instances:
+		* `sub`: str
+		* `text`: str
+
+	* `SubsectionCreate` -> isnstances:
+		* `SubsectionBase`: *pass*
+
+	* `Subsection` -> instances:
+		* `id`: int
+		* `country`: Country
+		* `chapter`: Chapter
+		* `article`: Article
+		* `section`: Section
+
+
 * [crud.py](./crud.py): Contains functions that
-			creates, reads, updates
-			and deletes articles.
+			reads from routers.
 			They include:
-	* get_article
-	* get_articles_by_country_and_chapter
-	* create_article
-	* update_article
-	* delete_article
+	* search_sections_by_keyword
+	* search_subsections_by_keyword
+	* search_chapters_by_keyword
+	* search_articles_by_keyword
+
+
 * [main.py](./main.py): Contains functions that
 			defines enpoints to call
 			**CRUD** functions. They
 			include:
 
-	* `read_articles_by_country_and_chapter`
-	* `read_article`
-	* `create_article_for_country_and_chapter`
-	* `update_article`
-	* `delete_article`
+	* `search_chapters_by_keyword`
+	* `search_articles_by_keyword`
+	* `search_sections_by_keyword`
+	* `search_subsections_by_keyword`
 
 
 ## Endpoints
 
-* **GET**: `/get_articles`
-* **GET**: `/get_article/{article_id}`
-* **POST**: `/create_article/{country_id}/{chapter_id}`
-* **PUT**: `/update_article/{article_id}`
-* **DELETE**: `/delete_article/{article_id}`
+* **GET**: `/search/chapters/`
+* **GET**: `/search/articles/`
+* **GET**: `/search/sections/`
+* **GET**: `/search/subsections/`
