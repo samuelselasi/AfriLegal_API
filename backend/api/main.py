@@ -37,4 +37,5 @@ app.include_router(items.router, tags=["Items"])
 @app.get("/")
 async def root():
     """Function that returns a default message when the root url is hit"""
+
     return {"message": "Welcome to AfriLegal API. Hit /docs for swagger"}
