@@ -12,13 +12,14 @@
 This router contains files for handling
 endpoints that:
 
-* Reads -> `GET`,
-* Creates -> `POST`,
-* Updates -> `PUT` or `PATCH` and
-* Deletes -> `DELETE`
+* Read -> `GET`,
+* Create -> `POST`,
+* Update -> `PUT`,
+* Delete -> `DELETE`
 
 sections of the constitution
-of a particular country.
+of a particular country based
+on a keyword.
 
 
 ## Files
@@ -46,6 +47,15 @@ of a particular country.
 		* number
 		* title
 		* text
+
+	* `Section` -> instances:
+		* id
+		* country_id
+		* chapter_id
+		* article_id
+		* number
+		* text
+
 
 * [schemas.py](./schemas.py): Contains classes
 			      that define schemas
@@ -87,31 +97,52 @@ of a particular country.
 		* `country`: Country
 		* `chapter`: Chapter
 
+	* `SectionBase` -> instances:
+		* `number`: int
+ 		* `text`: str
+
+	* `SectionCreate` -> isnstances:
+		* `SectionBase`: *pass*
+
+	* `Section` -> instances:
+		* `id`: int
+		* `country`: Country
+		* `chapter`: Chapter
+		* `article`: Article
+
+
 * [crud.py](./crud.py): Contains functions that
-			creates, reads, updates
-			and deletes articles.
+			reads from routers.
 			They include:
-	* get_article
-	* get_articles_by_country_and_chapter
-	* create_article
-	* update_article
-	* delete_article
+	* get_section
+	* get_sections_by_country
+	* get_sections_by_country_and_chapter
+	* get_sections_by_country_and_chapter_and_article
+	* create_section
+	* update_section
+	* delete_section
+
+
 * [main.py](./main.py): Contains functions that
 			defines enpoints to call
 			**CRUD** functions. They
 			include:
 
-	* `read_articles_by_country_and_chapter`
-	* `read_article`
-	* `create_article_for_country_and_chapter`
-	* `update_article`
-	* `delete_article`
+	* `read_sections_by_country`
+	* `read_sections_by_country_and_chapter`
+	* `read_sections_by_country_chapter_article`
+	* `read_section`
+	* `create_section_for_country_chapter_article`
+	* `update_section`
+	* `delete_section`
 
 
 ## Endpoints
 
-* **GET**: `/get_articles`
-* **GET**: `/get_article/{article_id}`
-* **POST**: `/create_article/{country_id}/{chapter_id}`
-* **PUT**: `/update_article/{article_id}`
-* **DELETE**: `/delete_article/{article_id}`
+* **GET**: `/get_section_by_country/{country_id}`
+* **GET**: `/get_section_by_country_and_chapter/{country_id}/{chapter_id}`
+* **GET**: `/get_section/{country_id}/{chapter_id}/{article_id}`
+* **GET**: `/read_section/{section_id}`
+* **POST**: `/create_section/{country_id}/{chapter_id}/{article_id}`
+* **PUT**: `/update_section/{section_id}`
+* **DELETE**: `/delete_section/{section_id}`

@@ -1,3 +1,6 @@
+#!/usr/bin/python3
+"""Module that defines endpoints for sections"""
+
 from typing import List
 from sqlalchemy.orm import Session
 from . import crud, models, schemas
