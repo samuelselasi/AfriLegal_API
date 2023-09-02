@@ -12,13 +12,14 @@
 This router contains files for handling
 endpoints that:
 
-* Reads -> `GET`,
-* Creates -> `POST`,
-* Updates -> `PUT` or `PATCH` and
-* Deletes -> `DELETE`
+* Read -> `GET`,
+* Create -> `POST`,
+* Update -> `PUT`,
+* Delete -> `DELETE`
 
 subsections of the constitution
-of a particular country.
+of a particular country based
+on a keyword.
 
 
 ## Files
@@ -46,6 +47,24 @@ of a particular country.
 		* number
 		* title
 		* text
+
+	* `Section` -> instances:
+		* id
+		* country_id
+		* chapter_id
+		* article_id
+		* number
+		* text
+
+	* `Subsection` -> instances:
+		* id
+		* country_id
+		* chapter_id
+		* article_id
+		* sectoin_id
+		* sub
+		* text
+
 
 * [schemas.py](./schemas.py): Contains classes
 			      that define schemas
@@ -87,31 +106,69 @@ of a particular country.
 		* `country`: Country
 		* `chapter`: Chapter
 
+	* `SectionBase` -> instances:
+		* `number`: int
+ 		* `text`: str
+
+	* `SectionCreate` -> isnstances:
+		* `SectionBase`: *pass*
+
+	* `Section` -> instances:
+		* `id`: int
+		* `country`: Country
+		* `chapter`: Chapter
+		* `article`: Article
+
+	* `SubsectionBase` -> instances:
+		* `sub`: str
+		* `text`: str
+
+	* `SubsectionCreate` -> isnstances:
+		* `SubsectionBase`: *pass*
+
+	* `Subsection` -> instances:
+		* `id`: int
+		* `country`: Country
+		* `chapter`: Chapter
+		* `article`: Article
+		* `section`: Section
+
+
 * [crud.py](./crud.py): Contains functions that
-			creates, reads, updates
-			and deletes articles.
+			reads from routers.
 			They include:
-	* get_article
-	* get_articles_by_country_and_chapter
-	* create_article
-	* update_article
-	* delete_article
+	* get_subsection
+	* get_subsections_by_country
+	* get_subsections_by_country_chapter
+	* get_subsections_by_country_chapter_article
+	* get_subsections_by_country_chapter_article_section
+	* create_subsection
+	* update_subsection
+	* delete_subsection
+
+
 * [main.py](./main.py): Contains functions that
 			defines enpoints to call
 			**CRUD** functions. They
 			include:
 
-	* `read_articles_by_country_and_chapter`
-	* `read_article`
-	* `create_article_for_country_and_chapter`
-	* `update_article`
-	* `delete_article`
+	* `read_subsections_by_country`
+	* `read_subsections_by_country_and_chapter`
+	* `read_subsections_by_country_chapter_and_article`
+	* `read_subsections_by_country_chapter_article_and_section`
+	* `read_subsection`
+	* `create_subsection`
+	* `update_subsection`
+	* `delete_subsection`
 
 
 ## Endpoints
 
-* **GET**: `/get_articles`
-* **GET**: `/get_article/{article_id}`
-* **POST**: `/create_article/{country_id}/{chapter_id}`
-* **PUT**: `/update_article/{article_id}`
-* **DELETE**: `/delete_article/{article_id}`
+* **GET**: `/get_subsection_by_country/{country_id}`
+* **GET**: `/get_subsection_by_cc/{country_id}/{chapter_id}`
+* **GET**: `/get_subsection_by_cca/{country_id}/{chapter_id}/{article_id}`
+* **GET**: `/get_subsection_by_ccas/{country}/{chapter}/{article}/{section}`
+* **GET**: `/get_subsection/{subsection_id}`
+* **POST**: `/create_subsection/{country}/{chapter}/{article}/{section}`
+* **PUT**: `/update_subsection/{subsection_id}`
+* **DELETE**: `/delete_subsection/{subsection_id}`
