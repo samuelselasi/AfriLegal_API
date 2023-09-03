@@ -1,14 +1,15 @@
 #!/usr/bin/python3
 """Module to initialize routers and endpoints"""
 
-from typing import Any, Dict, List
-
 from api.config import settings
-from fastapi_mail import ConnectionConfig, FastMail, MessageSchema
+from typing import Any, Dict, List
 from pydantic import BaseModel, EmailStr
+from fastapi_mail import ConnectionConfig, FastMail, MessageSchema
 
 
 class Mail(BaseModel):
+    """Class that defines email instances"""
+
     email: List[EmailStr]
     content: Dict[str, Any]
 
@@ -27,6 +28,8 @@ fm = FastMail(
 
 
 async def simple_send(mail: Mail, template):
+    """Function to send an email"""
+
     message = MessageSchema(
         subject=mail.content.get(
             'subject') or 'AfriLegal API Password Reset',
@@ -38,6 +41,8 @@ async def simple_send(mail: Mail, template):
 
 
 async def send_in_background(background_tasks, mail: Mail, template: str):
+    """Function to send an email in the background"""
+
     message = MessageSchema(
         subject=mail.content.get('subject') or 'AfriLegal API Password Reset',
         recipients=mail.email,
