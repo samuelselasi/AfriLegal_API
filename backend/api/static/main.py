@@ -2,7 +2,6 @@
 """Module to initialize routers and endpoints"""
 
 import os
-
 from api.config import settings
 
 static_DIR = settings.STATIC_DIR or os.path.dirname(os.path.relpath(__file__))
