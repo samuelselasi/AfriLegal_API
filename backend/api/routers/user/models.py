@@ -2,12 +2,12 @@
 """Module that defines tables"""
 
 import secrets
+from .database import Base
 from datetime import datetime
-from .database import Base, SessionLocal
-from passlib.hash import pbkdf2_sha256 as sha256
-from sqlalchemy import (Boolean, Column, DateTime, ForeignKey, Integer, String,
-                        event, DDL, event)
 from sqlalchemy.orm import relationship
+from passlib.hash import pbkdf2_sha256 as sha256
+from sqlalchemy import (Boolean, Column, DateTime, ForeignKey, Integer,
+                        String, event, DDL)
 
 
 class User(Base):
@@ -33,6 +33,7 @@ class User(Base):
 
         return sha256.verify(password, hash)
 
+
 class UserInfo(Base):
     """Class that defines additional user information"""
 
@@ -47,7 +48,7 @@ class UserInfo(Base):
     user = relationship('User', backref="user_info")
 
 
-    # Define the trigger function
+# Define the trigger function
 trigger_function = DDL('''
 CREATE OR REPLACE FUNCTION insert_user_info()
 RETURNS TRIGGER AS $$
@@ -58,14 +59,15 @@ END;
 $$ LANGUAGE plpgsql;
 ''')
 
+
 def insert_user_info(mapper, connection, target):
+    """Function to add user details"""
+
     connection.execute(UserInfo.__table__.insert().values(user_id=target.id))
+
 
 # Attach the trigger function to the 'after_insert' event of the User table
 event.listen(User, 'after_insert', insert_user_info)
-# Attach the trigger function to the 'after_insert' event of the User table
-# event.listen(User.__table__, 'after_insert', trigger_function)
-
 
 
 class ResetPasswordToken(Base):
@@ -102,13 +104,3 @@ class UserType(Base):
     title = Column(String, unique=True, index=True)
 
     user = relationship('User', backref="user_type")
-
-
-#@event.listens_for(UserType.__table__, 'after_create')
-#def insert_initial_values(*args, **kwargs):
- #   """Function to add initial user types"""
-#
- #   db = SessionLocal()
-  #  db.add_all([UserType(title='Admin'), UserType(
-   #     title='Moderator'), UserType(title='Normal')])
-    #db.commit()

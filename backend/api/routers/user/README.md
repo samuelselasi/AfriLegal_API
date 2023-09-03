@@ -1,4 +1,4 @@
-# Articles Router
+# User Router
 
 ## Content
 
@@ -17,8 +17,7 @@ endpoints that:
 * Updates -> `PUT` or `PATCH` and
 * Deletes -> `DELETE`
 
-articles of the constitution
-of a particular country.
+users of AfriLegal API.
 
 
 ## Files
@@ -28,24 +27,26 @@ of a particular country.
 	                    ORM integration.
 	                    Classes include:
 
-	* `Country`-> instances:
+	* `User`-> instances:
 		* id
-		* name
-		* region_id
+		* email
+		* password
+		* status
+		* user_type_id
 
-	* `Chapter`-> instances:
+	* `UserInfo`-> instances:
 		* id
-		* number
-		* text
-		* country_id
+		* user_id
+		* first_name
+		* middle_name
+		* last_name
 
-	* `Article` -> instances:
+	* `ResetPasswordToken` -> instances:
 		* id
-		* country_id
-		* chapter_id
-		* number
-		* title
-		* text
+		* user_id
+		* token
+		* date_created
+
 
 * [schemas.py](./schemas.py): Contains classes
 			      that define schemas
@@ -53,65 +54,94 @@ of a particular country.
 			      database tables.
 			      Classes include:
 
-	* `CountryBase` -> instances:
-		* `name`: str
+	* `UserBase` -> instances:
+		* `email`: EmailStr
 
-	* `CountryCreate` -> instances:
-		* `CountryBase`: *pass*
+	* `UserCreate` -> instances:
+		* `password`: str
+		* `user_type_id`: int
+		* `status`: bool
 
-	* `Country` -> instances:
+	* `UserUpdate` -> instances:
+		* `first_name`: str
+		* `middle_name`: str
+		* `last_name`: str
+
+	* `ResetPassword` -> instances:
+                * `password`: str
+		* `code`: str
+
+	* `ChangePassword` -> instances:
+                * `email`: str
+		* `password`: str
+
+	* `User` -> instances:
 		* `id`: int
-		* `region_id`: int
+		* `user_type_id`: str
 
-	* `ChapterBase` -> instances:
-                * `number`: int
-		* `text`: str
-
-	* `ChapterCreate` -> instances:
-                * `ChapterBase`: *pass*
-
-	* `Chapter` -> instances:
-		* `id`: int
-		* `country`: Country
-
-	* `ArticleBase` -> instances:
-		* `number`: int
-		* `title`: str
-		* `text`: str
-
-	* `ArticleCreate` -> isnstances:
-		* `ArticleBase`: *pass*
-
-	* `Article` -> instances:
-		* `id`: int
-		* `country`: Country
-		* `chapter`: Chapter
 
 * [crud.py](./crud.py): Contains functions that
 			creates, reads, updates
-			and deletes articles.
+			and deletes users.
 			They include:
-	* get_article
-	* get_articles_by_country_and_chapter
-	* create_article
-	* update_article
-	* delete_article
+	* is_token_blacklisted
+	* read_users
+	* read_users_auth
+	* read_user_by_id
+	* read_user_by_id_auth
+	* read_user_by_email
+	* read_user_by_email_auth
+	* create_user
+	* create_user_auth
+	* verify_password
+	* verify_password_auth
+	* read_hash_code
+	* read_hash_table
+	* reset_password
+	* reset_password_auth
+	* reset_password`_`
+	* reset_password_auth`_`
+	* change_password
+	* verify_code
+	* verify_code_auth
+	* verify_code`_`
+	* verify_code_auth`_`
+	* update_user
+	* update_user_auth
+	* delete_user
+	* delete_user_auth
+
+
 * [main.py](./main.py): Contains functions that
 			defines enpoints to call
 			**CRUD** functions. They
 			include:
 
-	* `read_articles_by_country_and_chapter`
-	* `read_article`
-	* `create_article_for_country_and_chapter`
-	* `update_article`
-	* `delete_article`
+	* `read_all_users`
+	* `read_a_user_by_id`
+	* `read_user_by_email`
+	* `verify_hash_details`
+	* `read_hash_table`
+	* `create_user`
+	* `verify_password`
+	* `update_user`
+	* `update_password`
+	* `update_password_`
+	* `change_password`
+	* `delete_user`
 
 
 ## Endpoints
 
-* **GET**: `/get_articles`
-* **GET**: `/get_article/{article_id}`
-* **POST**: `/create_article/{country_id}/{chapter_id}`
-* **PUT**: `/update_article/{article_id}`
-* **DELETE**: `/delete_article/{article_id}`
+* **GET**: `/get_users`
+* **GET**: `/get/{id}`
+* **GET**: `/{email}/`
+* **GET**: `/verify_hash`
+* **GET**: `/read_hash_tabl`
+* **POST**: `/create_user`
+* **POST**: `/verify/password`
+* **PATCH**: `/update/{id}`
+* **PATCH**: `/{id}/password`
+* **PATCH**: `/password`
+* **PUT**: `/change/password`
+* **DELETE**: `/delete/{id}`
