@@ -284,7 +284,8 @@ img {
 }
 
 .contact-section-header > p {
-  font-style: italic;
+  font-weight: 400;
+  font-size: medium;
 }
 
 .contact-links {
@@ -292,7 +293,7 @@ img {
   justify-content: center;
   width: 100%;
   max-width: 980px;
-  margin-top: 4rem;
+  margin-top: 2rem;
   flex-wrap: wrap;
 }
 
