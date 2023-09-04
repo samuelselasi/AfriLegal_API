@@ -1,5 +1,5 @@
 #!/usr/bin/python3
-"""Module to initialize routers and endpoints"""
+"""Module to send emails"""
 
 from api.config import settings
 from typing import Any, Dict, List
@@ -31,12 +31,10 @@ async def simple_send(mail: Mail, template):
     """Function to send an email"""
 
     message = MessageSchema(
-        subject=mail.content.get(
-            'subject') or 'AfriLegal API Password Reset',
+        subject=mail.content.get('subject') or 'AfriLegal API Password Reset',
         recipients=mail.email,
         body=template.format(**mail.content),
-        subtype="html"
-    )
+        subtype="html")
     await fm.send_message(message)
 
 
@@ -47,6 +45,5 @@ async def send_in_background(background_tasks, mail: Mail, template: str):
         subject=mail.content.get('subject') or 'AfriLegal API Password Reset',
         recipients=mail.email,
         body=template.format(**mail.content),
-        subtype="html"
-    )
+        subtype="html")
     background_tasks.add_task(fm.send_message, message)
