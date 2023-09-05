@@ -81,65 +81,113 @@
 	    <li>
                     <strong>Update User</strong>
                     <code>
-                            curl -X POST -H "Content-Type: application/json" -d '{ "email": "user@example.com", "password": "string", "user_type_id": 1, "status": true }' http://100.26.231.45:89/create_user
+			    curl -X PATCH -H "Content-Type: application/json" -d '{ "first_name": "string", "middle_name": "string", "last_name": "string"}' http://100.26.231.45:89/update/{id}
                     </code>
             </li>
 	    <li>
                     <strong>Delete User</strong>
                     <code>
-                            curl -X POST -H "Content-Type: application/json" -d '{ "email": "user@example.com", "password": "string", "user_type_id": 1, "status": true }' http://100.26.231.45:89/create_user
+                            curl http://100.26.231.45:89/delete/1
                     </code>
             </li>
-            <li>Update User</li>
-            <li>Delete User</li>
           </ul>
+
         </article>
       </section>
       <section class="main-section" id="Authentication">
         <header>Authentication</header>
         <article>
           <p>
-            JavaScript and Java are similar in some ways but fundamentally
-            different in some others. The JavaScript language resembles Java but
-            does not have Java's static typing and strong type checking.
-            JavaScript follows most Java expression syntax, naming conventions
-            and basic control-flow constructs which was the reason why it was
-            renamed from LiveScript to JavaScript.
+            This endpoint handles the login mechanism of the API.
+	    Also available is the logout option where the access
+	    token generated will be blacklisted and refresh token
+	    to regenerate token to be kept logged in. The following
+	    show how to access the authentication endpoints:
           </p>
+	  <ul>
+            <li>
+                    <strong>Login</strong>
+                    <code>
+                            curl -X POST -H "Content-Type: application/json" -d '{ "email": "user@example.com", "password": "string" }' http://100.26.231.45:89/login
+                    </code>
+            </li>
+            <li>
+                    <strong>Logout</strong>
+                    <code>
+                            curl -X POST -H "Content-Type: application/json" -d '{ "access_token": "string", "refresh_token": "string" }' http://100.26.231.45:89/logout
+                    </code>
+            </li>
+            <li>
+                    <strong>Refresh</strong>
+                    <code>
+                            curl -X POST -H "Content-Type: application/json" -d '{ "access_token": "string", "refresh_token": "string" }' http://100.26.231.45:89/refresh
+                    </code>
+            </li>
+            <li>
+                    <strong>Password Reset</strong>
+                    <code>
+                            curl -X POST -H "Content-Type: application/json" -d '{ "email": "email" }' http://100.26.231.45:89/request
+                    </code>
+            </li>
+          </ul>
 
-          <p>
-            In contrast to Java's compile-time system of classes built by
-            declarations, JavaScript supports a runtime system based on a small
-            number of data types representing numeric, Boolean, and string
-            values. JavaScript has a prototype-based object model instead of the
-            more common class-based object model. The prototype-based model
-            provides dynamic inheritance; that is, what is inherited can vary
-            for individual objects. JavaScript also supports functions without
-            any special declarative requirements. Functions can be properties of
-            objects, executing as loosely typed methods.
-          </p>
-          <p>
-            JavaScript is a very free-form language compared to Java. You do not
-            have to declare all variables, classes, and methods. You do not have
-            to be concerned with whether methods are public, private, or
-            protected, and you do not have to implement interfaces. Variables,
-            parameters, and function return types are not explicitly typed.
-          </p>
         </article>
       </section>
       <section class="main-section" id="Regions">
         <header>Regions</header>
-        <article>
-          To get started with writing JavaScript, open the Scratchpad and write
-          your first "Hello world" JavaScript code:
-          <code
-            >function greetMe(yourName) { alert("Hello " + yourName); }
-            greetMe("World");
-          </code>
-
-          Select the code in the pad and hit Ctrl+R to watch it unfold in your
-          browser!
-        </article>
+	<p>
+            This endpoint handles the various regions in Africa.
+            The endpoints are developed for users to read the
+	    various regions, create or update and delete them
+	    based on id or by name. At the momentd, the endpoints
+	    for region have not been authenticated yet but will
+	    change in the near future. The following are ways
+	    to utilize the endpoints for Regions:
+          </p>
+          <ul>
+            <li>
+                    <strong>Get Regions</strong>
+                    <code>
+                            curl http://100.26.231.45:89/get_regions
+                    </code>
+            </li>
+            <li>
+                    <strong>Get Regions & Countries</strong>
+                    <code>
+                            curl http://100.26.231.45:89/get_regions_countries
+                    </code>
+            </li>
+            <li>
+                    <strong>Get Region By ID</strong>
+                    <code>
+                            curl http://100.26.231.45:89/get_region_by_id/{id}
+                    </code>
+            </li>
+            <li>
+                    <strong>Get Region By Name</strong>
+                    <code>
+                            curl http://100.26.231.45:89/get_region_by_name/region_name?region_name=West%20Africa
+                    </code>
+            </li>
+	    <li>
+                    <strong>Create Region</strong>
+                    <code>
+                            curl -X POST -H "Content-Type: application/json" -d '{ "name": "string" }' http://100.26.231.45:89/create_region
+                    </code>
+            </li>
+	    <li>
+                    <strong>Update Region</strong>
+                    <code>
+			    curl -X PUT -H "Content-Type: application/json" -d '{ "name": "string" }' http://100.26.231.45:89/update_region/{id}
+                    </code>
+            </li>
+	    <li>
+                    <strong>Delete Region</strong>
+                    <code>
+			    curl http://100.26.231.45:89/delete_region/{id}
+                    </code>
+            </li>
+          </ul>
       </section>
       <section class="main-section" id="Countries">
         <header>Countries</header>
@@ -440,9 +488,9 @@
             <li>
               All the documentation in this page is taken from
               <a
-                href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide"
+                href="http://100.26.231.45:89/docs"
                 target="_blank"
-                >MDN</a
+                >Swagger Docs</a
               >
             </li>
           </ul>

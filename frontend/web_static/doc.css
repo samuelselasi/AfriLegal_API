@@ -3,6 +3,7 @@ body {
   min-width: 290px;
   color: #ffffff;
   background-color: #000000;
+  background-image: linear-gradient(53deg, #000000 0%, #303841 100%);
   font-family: 'Open Sans', Arial, sans-serif;
   line-height: 1.5;
 }
@@ -21,6 +22,8 @@ body {
 header {
   color: #E91E63;
   margin: 10px;
+  background-image: linear-gradient(53deg, #000000 0%, #303841 100%);
+  font-weight: bold;
   text-align: center;
   font-size: 1.8em;
   font-weight: thin;
@@ -34,6 +37,7 @@ header {
 #navbar ul {
   height: 88%;
   padding: 0;
+  background-image: linear-gradient(53deg, #000000 0%, #303841 100%);
   overflow-y: auto;
   overflow-x: hidden;
 }
@@ -72,9 +76,9 @@ section li {
 }
 
 code {
+  font-weight: bold;
   display: block;
   text-align: left;
-  white-space: pre-line;
   position: relative;
   word-break: normal;
   word-wrap: normal;
